@@ -1,17 +1,25 @@
 package com.spring.spring.controller;
 
+import com.spring.spring.model.RestResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/")
 public class SayJenkinsController {
 
-    @GetMapping(path = "/say")
+    @GetMapping(
+            path = "/say",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public Object say() {
-        return Map.of("message", "Hello, Jenkins");
+        return RestResponse.builder()
+                .statusCode(HttpStatus.OK.toString())
+                .statusMessage("Hello, Jenkins")
+                .build();
     }
 }

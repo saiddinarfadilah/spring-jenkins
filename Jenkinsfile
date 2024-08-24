@@ -8,7 +8,7 @@ pipeline {
                 echo 'steps build 2'
                 echo 'steps build 3'
                 sleep(5)
-	            bat 'mvn clean'
+	            bat 'mvn clean package'
             }
         }
         stage('Test') {
