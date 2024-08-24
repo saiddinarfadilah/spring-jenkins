@@ -1,21 +1,32 @@
 pipeline {
     agent any
-
+	tools {
+		maven 'maven-3.9.9'
+	}
     stages {
         stage('Build') {
             steps {
-                echo 'steps build'
+                echo 'steps build 1'
+                echo 'steps build 2'
+                echo 'steps build 3'
+                sleep(5)
+	            bat 'mvn clean'
             }
         }
         stage('Test') {
             steps {
-                echo 'steps test'
-                bat 'error' // error
+                echo 'steps test 1'
+                echo 'steps test 2'
+                sleep(5)
+                echo 'steps test 3'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'steps deploy'
+                echo 'steps deploy 1'
+                echo 'steps deploy 2'
+                sleep(5)
+                echo 'steps deploy 3'
             }
         }
     }
