@@ -1,30 +1,32 @@
 pipeline {
     agent any
 
+    environment {
+        ID_SECRET = credentials('ID_SECRET')
+    }
+
     stages {
         stage('Build') {
             steps {
-                echo 'steps build 1'
-                echo 'steps build 2'
-                echo 'steps build 3'
-                sleep(5)
+                echo 'steps build with ID_SECRET : %ID_SECRET%"'
+                echo 'execute job %JOB_NAME% : %BUILD_NUMBER%'
 	            bat 'mvn clean package'
+                sleep(5)
+	            echo 'build done by %SDF_AUTHOR%'
             }
         }
         stage('Test') {
             steps {
-                echo 'steps test 1'
-                echo 'steps test 2'
+                echo 'steps test with ID_SECRET : %ID_SECRET%'
                 sleep(5)
-                echo 'steps test 3'
+                echo 'test done by %SDF_AUTHOR%'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'steps deploy 1'
-                echo 'steps deploy 2'
+                echo 'steps deploy with ID_SECRET : %ID_SECRET%'
                 sleep(5)
-                echo 'steps deploy 3'
+                echo 'deploy done by %SDF_AUTHOR%'
             }
         }
     }
