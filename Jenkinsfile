@@ -14,7 +14,6 @@ pipeline {
 
 
     stages {
-
         stage('Input') {
             agent any
             input {
@@ -25,7 +24,7 @@ pipeline {
                 }
             }
             options {
-                timeout(time: 10, unit: 'SECONDS')
+                timeout(time: 10, unit: 'HOURS')
             }
             steps {
                 echo "Hello Back, ${FIRST_NAME}"
@@ -43,6 +42,7 @@ pipeline {
 	            echo "build done by ${SDF_AUTHOR}"
             }
         }
+
         stage('Test') {
             steps {
                 echo "steps test with ID_SECRET : ${SECRET}"
@@ -50,6 +50,7 @@ pipeline {
                 echo "test done by ${SDF_AUTHOR}"
             }
         }
+
         stage('Deploy') {
             steps {
                 echo "steps deploy with ID_SECRET : ${SECRET}"
