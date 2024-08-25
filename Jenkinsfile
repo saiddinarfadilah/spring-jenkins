@@ -28,7 +28,7 @@ pipeline {
                }
             }
             options {
-                timeout(time: 1, unit: 'MINUTES')
+                timeout(time: 5, unit: 'SECONDS')
             }
             steps {
                 echo "Hello Back, ${FIRST_NAME}"
