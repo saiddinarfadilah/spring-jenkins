@@ -24,7 +24,7 @@ pipeline {
                 }
             }
             options {
-                timeout(time: 10, unit: 'HOURS')
+                timeout(time: 1, unit: 'MINUTES')
             }
             steps {
                 echo "Hello Back, ${FIRST_NAME}"
@@ -34,10 +34,17 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "steps build with ID_SECRET : ${SECRET}"
-                echo "project : ${params.PROJECT_NAME} , production : ${params.IS_PRODUCTION}"
-                echo "execute job ${JOB_NAME} : ${BUILD_NUMBER}"
-	            bat "mvn ${params.TYPE}"
+                bat """
+                    echo "steps build with ID_SECRET : ${SECRET}"
+                    echo "project : ${params.PROJECT_NAME} , production : ${params.IS_PRODUCTION}"
+                    echo "execute job ${JOB_NAME} : ${BUILD_NUMBER}"
+                    mvn ${params.TYPE}
+                """
+
+//                 echo "steps build with ID_SECRET : ${SECRET}"
+//                 echo "project : ${params.PROJECT_NAME} , production : ${params.IS_PRODUCTION}"
+//                 echo "execute job ${JOB_NAME} : ${BUILD_NUMBER}"
+// 	            bat "mvn ${params.TYPE}"
                 sleep(5)
 	            echo "build done by ${SDF_AUTHOR}"
             }
