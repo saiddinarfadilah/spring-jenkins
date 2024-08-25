@@ -18,7 +18,7 @@ pipeline {
                 echo "steps build with ID_SECRET : ${SECRET}"
                 echo "project : ${params.PROJECT_NAME} , production : ${params.IS_PRODUCTION}"
                 echo "execute job ${JOB_NAME} : ${BUILD_NUMBER}"
-	            bat "mvn ${params.choice}"
+	            bat "mvn ${params.TYPE}"
                 sleep(5)
 	            echo "build done by ${SDF_AUTHOR}"
             }
