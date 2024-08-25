@@ -29,7 +29,7 @@ pipeline {
                 retry(3) {
                    echo "Hello Back, ${FIRST_NAME}"
                 }
-                timeout(time: 30, unit: 'MINUTES')
+                timeout(time: 5, unit: 'SECONDS')
             }
         }
 
