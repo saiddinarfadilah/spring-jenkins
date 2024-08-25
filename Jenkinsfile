@@ -3,10 +3,11 @@ pipeline {
 
     environment {
         SECRET = credentials('ID_SECRET')
+        PROJECT_NAME = 'Belajar Pipeline'
     }
 
     parameters {
-        string(name: 'PROJECT_NAME', defaultValue: '', description: 'Project Name')
+        string(name: 'PROJECT_NAME', defaultValue: '${PROJECT_NAME}', description: 'Project Name')
         booleanParam(name: 'IS_PRODUCTION', defaultValue: false, description: 'Is Production')
         choice(name: 'TYPE', choices: ['clean', 'package', 'install'], description: 'Type')
         password(name: 'PASSWORD', defaultValue: '', description: 'Password')
