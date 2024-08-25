@@ -18,20 +18,18 @@ pipeline {
 
     stages {
         stage('Input') {
-            retry(3) {
-                input {
-                    message "What is your first name?"
-                    ok "Submit"
-                    parameters {
-                        string(name: "FIRST_NAME", defaultValue: "SAID", trim: true)
-                    }
-               }
-            }
-            options {
-                timeout(time: 5, unit: 'SECONDS')
+            input {
+                message "What is your first name?"
+                ok "submit"
+                parameters {
+                    string(name: 'FIRST_NAME', defaultValue: 'SAID')
+                }
             }
             steps {
-                echo "Hello Back, ${FIRST_NAME}"
+                retry(3) {
+                   echo "Hello Back, ${FIRST_NAME}"
+                }
+                timeout(time: 30, unit: 'MINUTES')
             }
         }
 
