@@ -18,17 +18,10 @@ pipeline {
 
     stages {
         stage('Input') {
-            input {
-                message "What is your first name?"
-                ok "submit"
-                parameters {
-                    string(name: 'FIRST_NAME', defaultValue: 'SAID')
-                }
-            }
             steps {
                 timeout(time: 5, unit: 'SECONDS') {
                     retry(3) {
-                        echo "Hello Back, ${FIRST_NAME}"
+                        bat "./test-retry.bat"
                     }
                 }
             }
