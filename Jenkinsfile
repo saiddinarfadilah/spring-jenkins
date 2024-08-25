@@ -5,12 +5,20 @@ pipeline {
         SECRET = credentials('ID_SECRET')
     }
 
+    parameters {
+        string(name: 'PROJECT_NAME', defaultValue: '', description: 'Project Name')
+        booleanParam(name: 'IS_PRODUCTION', defaultValue: false, description: 'Is Production')
+        choice(name: 'TYPE', choices: ['clean', 'package', 'install'], description: 'Type')
+        password(name: 'PASSWORD', defaultValue: '', description: 'Password')
+    }
+
     stages {
         stage('Build') {
             steps {
                 echo "steps build with ID_SECRET : ${SECRET}"
+                echo "project : ${params.PROJECT_NAME} , production : ${params.IS_PRODUCTION}"
                 echo "execute job ${JOB_NAME} : ${BUILD_NUMBER}"
-	            bat 'mvn clean package'
+	            bat "mvn ${params.choice}"
                 sleep(5)
 	            echo "build done by ${SDF_AUTHOR}"
             }
