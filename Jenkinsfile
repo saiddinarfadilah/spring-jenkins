@@ -18,13 +18,14 @@ pipeline {
 
     stages {
         stage('Input') {
-            agent any
-            input {
-                message "What is your first name?"
-                ok "Submit"
-                parameters {
-                    string(name: "FIRST_NAME", defaultValue: "SAID", trim: true)
-                }
+            retry(3) {
+                input {
+                    message "What is your first name?"
+                    ok "Submit"
+                    parameters {
+                        string(name: "FIRST_NAME", defaultValue: "SAID", trim: true)
+                    }
+               }
             }
             options {
                 timeout(time: 1, unit: 'MINUTES')
