@@ -26,10 +26,11 @@ pipeline {
                 }
             }
             steps {
-                retry(3) {
-                   echo "Hello Back, ${FIRST_NAME}"
+                timeout(time: 5, unit: 'SECONDS') {
+                    retry(3) {
+                        echo "Hello Back, ${FIRST_NAME}"
+                    }
                 }
-                timeout(time: 5, unit: 'SECONDS')
             }
         }
 
