@@ -3,17 +3,36 @@ pipeline {
 
     environment {
         SECRET = credentials('ID_SECRET')
-        PROJECT_NAME = 'Belajar Pipeline'
     }
 
     parameters {
-        string(name: 'PROJECT_NAME', defaultValue: '${PROJECT_NAME}', description: 'Project Name')
+        string(name: 'PROJECT_NAME', defaultValue: '', description: 'Project Name')
         booleanParam(name: 'IS_PRODUCTION', defaultValue: false, description: 'Is Production')
         choice(name: 'TYPE', choices: ['clean', 'package', 'install'], description: 'Type')
         password(name: 'PASSWORD', defaultValue: '', description: 'Password')
     }
 
+
     stages {
+
+        stage('Input') {
+            agent any
+            input {
+                message "What is your first name?"
+                ok "Submit"
+                parameters {
+                    string(name: "FIRST_NAME", defaultValue: "SAID", trim: true)
+                }
+            }
+            options {
+                timeout(time: 10, unit: 'SECONDS')
+            }
+            steps {
+                echo "Hello Back, ${FIRST_NAME}"
+            }
+        }
+
+
         stage('Build') {
             steps {
                 echo "steps build with ID_SECRET : ${SECRET}"
