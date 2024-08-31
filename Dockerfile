@@ -1,7 +1,6 @@
 # Stage 1 : Base Image Maven
 FROM maven:3.8.5-openjdk-17 AS builder
 WORKDIR /app
-ADD ./settings.xml /app
 ADD ./pom.xml /app
 ADD ./src /app/src/
 RUN mvn clean package
