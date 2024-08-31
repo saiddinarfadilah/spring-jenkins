@@ -1,0 +1,188 @@
+Started by user said dinar fadilah
+ > git.exe rev-parse --resolve-git-dir C:\Jenkins\data\jenkins_home\caches\git-be89b41adc0e0c73996b35a53c715f17\.git # timeout=10
+Setting origin to https://github.com/saiddinarfadilah/spring-jenkins.git
+ > git.exe config remote.origin.url https://github.com/saiddinarfadilah/spring-jenkins.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.46.0.windows.1'
+ > git.exe config --get remote.origin.url # timeout=10
+using GIT_ASKPASS to set credentials GITHUB CREDENTIALS
+ > git.exe fetch --tags --force --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/master
+Seen branch in repository origin/sit
+Seen 2 remote branches
+Obtained Jenkinsfile.sit from f837c8ae4d82e4e3352aa9348f038c75fa4f0387
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\Jenkins\data\jenkins_home\workspace\Belajar_Multibranch_Pipeline_sit
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential GITHUB_CREDENTIALS
+Cloning the remote Git repository
+Cloning with configured refspecs honoured and without tags
+Cloning repository https://github.com/saiddinarfadilah/spring-jenkins.git
+ > git.exe init C:\Jenkins\data\jenkins_home\workspace\Belajar_Multibranch_Pipeline_sit # timeout=10
+Fetching upstream changes from https://github.com/saiddinarfadilah/spring-jenkins.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.46.0.windows.1'
+using GIT_ASKPASS to set credentials GITHUB CREDENTIALS
+ > git.exe fetch --no-tags --force --progress -- https://github.com/saiddinarfadilah/spring-jenkins.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe config remote.origin.url https://github.com/saiddinarfadilah/spring-jenkins.git # timeout=10
+ > git.exe config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision f837c8ae4d82e4e3352aa9348f038c75fa4f0387 (sit)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f f837c8ae4d82e4e3352aa9348f038c75fa4f0387 # timeout=10
+Commit message: "ci(file): update Dockerfile"
+ > git.exe rev-list --no-walk 2fa3cea19eedadc44cfe3de487433d865b24e972 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 20 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (BUILD)
+[Pipeline] withCredentials
+Masking supported pattern matches of %DOCKER_PASSWORD%
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+== LOGIN DOCKER HUB ==
+[Pipeline] bat
+Warning: A secret was passed to "bat" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [DOCKER_PASSWORD]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
+
+C:\Jenkins\data\jenkins_home\workspace\Belajar_Multibranch_Pipeline_sit>docker login -u saiddinarfadilah -p **** docker.io
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+Login Succeeded
+[Pipeline] echo
+== BUILD DOCKER IMAGE ==
+[Pipeline] bat
+
+C:\Jenkins\data\jenkins_home\workspace\Belajar_Multibranch_Pipeline_sit>docker build -t docker.io/saiddinarfadilah/spring-jenkins:1.0.0 .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 467B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/openjdk:17-slim
+#2 ...
+
+#3 [auth] library/maven:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#4 [auth] library/openjdk:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [internal] load metadata for docker.io/library/maven:3.8.5-openjdk-17
+#5 DONE 2.3s
+
+#2 [internal] load metadata for docker.io/library/openjdk:17-slim
+#2 DONE 2.3s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [builder 1/5] FROM docker.io/library/maven:3.8.5-openjdk-17@sha256:3a9c30b3af6278a8ae0007d3a3bf00fff80ec3ed7ae4eb9bfa1772853101549b
+#7 DONE 0.0s
+
+#8 [stage-1 1/3] FROM docker.io/library/openjdk:17-slim@sha256:aaa3b3cb27e3e520b8f116863d0580c438ed55ecfa0bc126b41f68c3f62f9774
+#8 DONE 0.0s
+
+#9 [internal] load build context
+#9 transferring context: 4.40kB 0.0s done
+#9 DONE 0.0s
+
+#10 [builder 3/5] ADD ./pom.xml /app
+#10 CACHED
+
+#11 [builder 2/5] WORKDIR /app
+#11 CACHED
+
+#12 [builder 4/5] ADD ./src /app/src/
+#12 CACHED
+
+#13 [builder 5/5] RUN mvn clean package -DskipTest
+#13 CACHED
+
+#14 [stage-1 2/3] WORKDIR /app
+#14 CACHED
+
+#15 [stage-1 3/3] COPY --from=builder /app/target/spring-jenkins-1.0.0.jar /app/spring-jenkins-1.0.0.jar
+#15 DONE 0.3s
+
+#16 exporting to image
+#16 exporting layers 0.1s done
+#16 writing image sha256:92c35abdd497bddac7f153df6fc9a46acabcd306e30f4bec77ac2d62284e7e91 done
+#16 naming to docker.io/saiddinarfadilah/spring-jenkins:1.0.0 done
+#16 DONE 0.1s
+[Pipeline] echo
+== PUSH IMAGE TO DOCKER HUB ==
+[Pipeline] bat
+
+C:\Jenkins\data\jenkins_home\workspace\Belajar_Multibranch_Pipeline_sit>docker push docker.io/saiddinarfadilah/spring-jenkins:1.0.0
+The push refers to repository [docker.io/saiddinarfadilah/spring-jenkins]
+7bc3aaaae1a2: Preparing
+a42cd7fed8d4: Preparing
+6be690267e47: Preparing
+13a34b6fff78: Preparing
+9c1b6dd6c1e6: Preparing
+6be690267e47: Mounted from library/openjdk
+9c1b6dd6c1e6: Mounted from library/openjdk
+13a34b6fff78: Mounted from library/openjdk
+a42cd7fed8d4: Pushed
+7bc3aaaae1a2: Pushed
+1.0.0: digest: sha256:2a68bba2fc04d8a30c62c5fac98a3547ab891d4f3003f006bcbb9381a958f01a size: 1371
+[Pipeline] echo
+build done
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (TEST)
+[Pipeline] echo
+test done
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (DEPLOY)
+[Pipeline] echo
+deploy done
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+process, success
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
