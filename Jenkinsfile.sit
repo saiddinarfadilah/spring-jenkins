@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IO_URL = "docker.io"
+        DOCKER_IO_PROJECT = "saiddinarfadilah"
+        APP_NAME = "spring-jenkins"
+        APP_VERSION = "1.0.0"
+    }
+
+    options {
+        timeout(time: 20, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('BUILD') {
+            when {
+                branch 'sit'
+            }
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS', usernameVariable:
+                        'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    script {
+                        echo "== LOGIN DOCKER HUB =="
+                        bat "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD ${DOCKER_IO_URL}"
+
+                        echo "== BUILD DOCKER IMAGE =="
+                        bat "docker build -t ${DOCKER_IO_URL}/${DOCKER_IO_PROJECT}/${APP_NAME}:${APP_VERSION} ."
+
+                        echo "== PUSH IMAGE TO DOCKER HUB =="
+                        bat "docker push ${DOCKER_IO_URL}/${DOCKER_IO_PROJECT}/${APP_NAME}:${APP_VERSION}"
+
+                        echo "build done"
+                    }
+                }
+            }
+        }
+
+        stage('TEST') {
+            steps {
+                echo "test done"
+            }
+        }
+
+        stage('DEPLOY') {
+            steps {
+                echo "deploy done"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'process, success'
+        }
+        failure {
+            echo 'Oh no, process failure'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}
