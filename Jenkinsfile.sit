@@ -27,6 +27,9 @@ pipeline {
                         echo "== BUILD DOCKER IMAGE =="
                         bat "docker build -t ${DOCKER_IO_URL}/${DOCKER_IO_PROJECT}/${APP_NAME}:${APP_VERSION} ."
 
+                        echo "== PUSH IMAGE TO DOCKER HUB =="
+                        bat "docker push ${DOCKER_IO_URL}/${DOCKER_IO_PROJECT}/${APP_NAME}:${APP_VERSION}"
+
                         echo "build done"
                     }
                 }
