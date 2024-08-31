@@ -1,0 +1,47 @@
+pipeline {
+    agent {}
+
+    environment {}
+
+    options {
+        timeout(time: 10, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('BUILD') {
+            when {
+                branch 'sit'
+            }
+            steps {
+                script {
+                    bat "mvn clean package"
+                    echo "build done"
+                }
+            }
+        }
+
+        stage('TEST') {
+            steps {
+                echo "build done"
+            }
+        }
+
+        stage('DEPLOY') {
+            steps {
+                echo "deploy done"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'process, success'
+        }
+        failure {
+            echo 'Oh no, process failure'
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}
