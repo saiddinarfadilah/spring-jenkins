@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IO_URL = "docker.io"
+        DOCKER_IO_PROJECT = "saiddinarfadilah"
+        APP_NAME = "spring-jenkins"
+        APP_VERSION = "1.0.0"
+    }
+
     options {
         timeout(time: 10, unit: 'MINUTES')
     }
@@ -12,7 +19,10 @@ pipeline {
             }
             steps {
                 script {
-                    bat "mvn clean package"
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS', usernameVariable:
+                            'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')])
+                    bat "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD ${DOCKER_IO_URL}"
+                    bat "docker build -t ${DOCKER_IO_URL}/${DOCKER_IO_USERNAME}/${APP_NAME}:${APP_VERSION}"
                     echo "build done"
                 }
             }
@@ -20,7 +30,7 @@ pipeline {
 
         stage('TEST') {
             steps {
-                echo "build done"
+                echo "test done"
             }
         }
 
