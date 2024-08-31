@@ -19,13 +19,14 @@ pipeline {
                 branch 'sit'
             }
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable:
-                            'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')])
-                    echo "== LOGIN DCOKER HUB =="
-                    bat "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD ${DOCKER_IO_URL}"
-                    bat "docker build -t ${DOCKER_IO_URL}/${DOCKER_IO_USERNAME}/${APP_NAME}:${APP_VERSION}"
-                    echo "build done"
+                withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable:
+                        'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    script {
+                        echo "== LOGIN DCOKER HUB =="
+                        bat "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD ${DOCKER_IO_URL}"
+                        bat "docker build -t ${DOCKER_IO_URL}/${DOCKER_IO_USERNAME}/${APP_NAME}:${APP_VERSION}"
+                        echo "build done"
+                    }
                 }
             }
         }
