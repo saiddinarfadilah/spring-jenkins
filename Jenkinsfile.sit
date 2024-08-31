@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        DOCKER_CREDENTIALS_ID = credentials('DOCKER_CREDENTIALS')
         DOCKER_IO_URL = "docker.io"
         DOCKER_IO_PROJECT = "saiddinarfadilah"
         APP_NAME = "spring-jenkins"
@@ -19,7 +20,7 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS', usernameVariable:
+                    withCredentials([usernamePassword(credentialsId: ${DOCKER_CREDENTIALS_ID}, usernameVariable:
                             'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')])
                     bat "docker login -u $DOCKER_USER -p $DOCKER_PASSWORD ${DOCKER_IO_URL}"
                     bat "docker build -t ${DOCKER_IO_URL}/${DOCKER_IO_USERNAME}/${APP_NAME}:${APP_VERSION}"
