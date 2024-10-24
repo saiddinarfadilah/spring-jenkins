@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sampleLibrary3.buildProject('maven') // Use Maven for build
+                    sampleLibrary3.buildProject('maven')
                 }
             }
         }
@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sampleLibrary3.runTests('gradle') // Use Gradle for tests
+                    sampleLibrary3.runTests('gradle')
                 }
             }
         }
@@ -23,12 +23,12 @@ pipeline {
     post {
         success {
             script {
-                sampleLibrary3.notifySuccess('#devops-channel')
+                sampleLibrary3.notify('success','#devops-channel')
             }
         }
         failure {
             script {
-                sampleLibrary3.notifyFailure('#devops-channel')
+                sampleLibrary3.notify('failure','#devops-channel')
             }
         }
     }
