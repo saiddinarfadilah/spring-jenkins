@@ -12,7 +12,9 @@ pipeline {
                 branch 'sit'
             }
             steps {
-                sampleLibrary.sayHello('said')
+                script {
+                    sampleLibrary.sayHello('said')
+                }
             }
         }
 
