@@ -14,7 +14,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sampleLibrary3.runTests('gradle')
+                    sampleLibrary3.runTests('maven')
                 }
             }
         }
