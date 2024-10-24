@@ -27,8 +27,8 @@ pipeline {
             }
             steps {
                 script {
-                    sampleLibrary.sayHello('Said')
-                    sampleLibrary.buildProject()
+                    sampleLibrary2.sayHello('Said')
+                    sampleLibrary2.buildProject()
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sampleLibrary.runTests()
+                    sampleLibrary2.runTests()
                 }
             }
         }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to ${DEPLOY_ENV} environment"
-                    sampleLibrary.deployToEnvironment(DEPLOY_ENV)
+                    sampleLibrary2.deployToEnvironment(DEPLOY_ENV)
                 }
             }
         }
@@ -58,13 +58,13 @@ pipeline {
         success {
             script {
                 echo 'Pipeline succeeded!'
-                sampleLibrary.notifySuccess()
+                sampleLibrary2.notifySuccess()
             }
         }
         failure {
             script {
                 echo 'Pipeline failed!'
-                sampleLibrary.notifyFailure()
+                sampleLibrary2.notifyFailure()
             }
         }
         always {
